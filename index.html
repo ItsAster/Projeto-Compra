@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Minha Lista de Produtos</title>
+    <style>
+        /* Definição de estilos para o formulário */
+        form {
+            display: flex;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        form label {
+            flex: 1 1 100%;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        form input {
+            flex: 1 1 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 20px;
+        }
+
+        form button {
+            background-color: #368ad8;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        form button:hover {
+            background-color: #2666b5;
+        }
+
+        /* Definição de estilos para a tabela */
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        table th {
+            background-color: #368ad8;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+            font-size: 14px;
+            padding: 8px;
+        }
+
+        table th:first-child,
+        table td:first-child {
+            width: 30%;
+        }
+
+        table td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        table td a {
+            color: #368ad8;
+            text-decoration: none;
+        }
+
+        table td a:hover {
+            text-decoration: underline;
+        }
+
+        table td:last-child {
+            text-align: center;
+        }
+
+        table td:last-child button {
+            background-color: #f44336;
+            color: white;
+            padding: 8px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        table td:last-child button:hover {
+            background-color: #e53935;
+        }
+
+        table tfoot td {
+            font-weight: bold;
+            font-size: 16px;
+            padding: 8px;
+            text-align: right;
+        }
+
+        #totalPreco {
+            font-size: 18px;
+            font-weight: bold;
+            font-size: arial;
+        }
+    </style>
+</head>
+
+<body>
+    <form id="form">
+        <label for="link">Link:</label>
+        <input type="text" id="link" name="link">
+
+        <label for="produto">Produto:</label>
+        <input type="text" id="produto" name="produto">
+
+        <label for="preco">Preço:</label>
+        <input type="number" id="preco" name="preco">
+
+        <button type="submit">Adicionar</button>
+    </form>
+
+    <table id="tabelaLink">
+        <thead>
+            <tr>
+                <th>Link</th>
+                <th>Produto</th>
+                <th>Preço</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody id="listaProdutosBody">
+        </tbody>
+        <tfoot>
+            <tr>
+                <td></td>
+                <td></td>
+                <td id="totalPreco"></td>
+                <td></td>
+            </tr>
+        </tfoot>
+    </table>
+
+    <script>
+        const form = document.querySelector('#form');
+        const listaProdutosBody = document.querySelector('#listaProdutosBody');
+        const totalPreco = document.querySelector('#totalPreco');
+
+        let produtos = [];
+
+        function adicionarProduto(link, produto, preco) {
+            produtos.push({ link, produto, preco });
+            renderizarListaProdutos();
+        }
+
+        function adicionarLink() {
+            const link = prompt('Insira o link do produto:');
+            form.link.value = link;
+        }
+
+        function excluirProduto(index) {
+            produtos.splice(index, 1);
+            renderizarListaProdutos();
+        }
+
+        function renderizarListaProdutos() {
+            let html = '';
+            let total = 0;
+
+            for (let i = 0; i < produtos.length; i++) {
+                const produto = produtos[i];
+                html += `
+      <tr>
+        <td><a href="${produto.link}">${produto.link}</a></td>
+        <td>${produto.produto}</td>
+        <td>R$ ${produto.preco.toFixed(2)}</td>
+        <td>
+          <button onclick="excluirProduto(${i})">Excluir</button>
+        </td>
+      </tr>
+    `;
+                total += produto.preco;
+            }
+
+            listaProdutosBody.innerHTML = html;
+            totalPreco.innerHTML = `Total: R$ ${total.toFixed(2)}`;
+        }
+
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+
+            const link = form.link.value;
+            const produto = form.produto.value;
+            const preco = parseFloat(form.preco.value);
+
+            if (link && produto && preco) {
+                adicionarProduto(link, produto, preco);
+                form.reset();
+            }
+        });
+
+        form.link.addEventListener('click', () => {
+            adicionarLink();
+        });
+    </script>
+
+</body>
+
+</html>
