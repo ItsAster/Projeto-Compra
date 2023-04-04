@@ -205,15 +205,14 @@
         
         
         function salvar(){
-            localStorage.info = document.getElementById('produto').values;
+            localStorage.info = document.getElementById("link, produto, preco").values;
         }
 
-        function salvar(){
-            localStorage.info = document.getElementById('link').values;
-        }
+        function carregar(){
+            if (localStorage.info){
+                    document.getElementById("link, produto, preco").value  = localStorage.info;
+            }
 
-        function salvar(){
-            localStorage.info = document.getElementById('preco').values;
         }
         
     </script>
