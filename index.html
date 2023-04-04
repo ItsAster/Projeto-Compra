@@ -207,15 +207,15 @@
 
         function salvar(){
             localStorage.info = document.getElementById("link").value;
-            localStorage.info = document.getElementById("produto").value;
-            localStorage.info = document.getElementById("preco").value;
+            //localStorage.info = document.getElementById("produto").value;
+            //localStorage.info = document.getElementById("preco").value;
         }
 
         function carregar(){
             if (localStorage.info){
                     document.getElementById("link").value  = localStorage.info;
-                    document.getElementById("produto").value  = localStorage.info;
-                    document.getElementById("preco").value  = localStorage.info;
+                   // document.getElementById("produto").value  = localStorage.info;
+                   // document.getElementById("preco").value  = localStorage.info;
             }
 
         }
